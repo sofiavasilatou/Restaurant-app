@@ -1,4 +1,3 @@
-# Restaurant-app
 # Restaurant App
 
 A small restaurant management suite (GUI + kitchen subscriber + analytics) using SQLite and MQTT.

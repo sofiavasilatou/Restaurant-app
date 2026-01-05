@@ -16,7 +16,7 @@ import time
 import queue
 import paho.mqtt.client as mqtt
 
-DB_FILE = "restaurant3telefteo.sqlite"
+DB_FILE = "restaurant.sqlite"
 
 # Restaurant coordinates (latitude, longitude) 
 RESTAURANT_COORDS = (38.2597916,21.7389367)  
@@ -3674,3 +3674,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

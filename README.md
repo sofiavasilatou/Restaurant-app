@@ -32,6 +32,7 @@ Example (PowerShell):
 $env:MQTT_BROKER_HOST = 'broker.example.com'
 $env:RESTAURANT_BRANCH = 'patras-1'
 ```
+These environment variables are optional — the application defaults to `localhost:1883` for the MQTT broker and uses the branch name `mybranch` for topics. Only set them if your MQTT broker is on a different host/port or you want to use a different branch/topic namespace.
 
 ## Running
 

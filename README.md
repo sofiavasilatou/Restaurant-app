@@ -3,10 +3,10 @@
 A small restaurant management suite (GUI + kitchen subscriber + analytics) using SQLite and MQTT.
 
 ## Contents
-- `apptelefteo.py` — Main desktop GUI and database access layer.
+- `app.py` — Main desktop GUI and database access layer.
 - `kitchen_subscriber.py` — Lightweight Tk-based kitchen UI that subscribes to live orders via MQTT.
 - `analytics.py` — Pandas/Matplotlib scripts for plotting receipts, tips and popular dishes.
-- `restaurant3telefteo.sqlite` — SQLite database used by the application.
+- `restaurant.sqlite` — SQLite database used by the application.
 
 ## Requirements
 - Python 3.8+
@@ -39,7 +39,7 @@ These environment variables are optional — the application defaults to `localh
 - Start the main app (GUI):
 
 ```powershell
-python apptelefteo.py
+python app.py
 ```
 
 - Run the kitchen view on a kitchen device or VM:
@@ -55,10 +55,10 @@ python analytics.py
 ```
 
 ## Database
-The app uses the SQLite file `restaurant3telefteo.sqlite` in the project root. It contains tables for `ORDERS`, `RECEIPT`, `MENU_ITEM`, reservations, clients and staff.
+The app uses the SQLite file `restaurant.sqlite` in the project root. Some of the main tables it contains are for `ORDERS`, `RECEIPT`, `MENU_ITEM`, `RESSERVATIONS`, `CLIENTS`,and `WAITER`  
 
 ## Notes
-- `apptelefteo.py` uses Nominatim (OpenStreetMap) and OSRM for geocoding and routing — these are remote services and have usage policies.
+- `app.py` uses Nominatim (OpenStreetMap) and OSRM for geocoding and routing — these are remote services.
 - The GUI and kitchen app use MQTT for live order flow. Ensure your MQTT broker is reachable from both devices.
 
 ## License & Contact

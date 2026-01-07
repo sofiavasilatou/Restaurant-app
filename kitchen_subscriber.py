@@ -1,15 +1,3 @@
-"""
-Kitchen subscriber for live orders via MQTT
-Run on the kitchen device, point BROKER_HOST to your MQTT broker (default localhost).
-Requires: paho-mqtt
-
-Usage:
-    pip install paho-mqtt
-    python anasta/kitchen_subscriber.py
-
-The script subscribes to topic `restaurant/<BRANCH>/orders/new` and shows orders in a Tk listbox.
-"""
-
 import json
 import queue
 import threading
@@ -46,7 +34,6 @@ _msg_queue = queue.Queue()
 # Simple in-memory store (order_id -> payload) for display
 ORDERS = {}
 
-# ---------- MQTT callbacks ----------
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -67,7 +54,6 @@ def on_message(client, userdata, msg):
     _msg_queue.put(data)
 
 
-# ---------- MQTT client runner ----------
 def start_mqtt_loop():
     client = mqtt.Client()
     client.on_connect = on_connect
@@ -79,9 +65,6 @@ def start_mqtt_loop():
     if user:
         client.username_pw_set(user, pwd)
 
-    # Optional TLS if environment variables set
-    # if os.environ.get("MQTT_TLS"):
-    #     client.tls_set()
 
     try:
         client.connect(BROKER_HOST, BROKER_PORT, keepalive=60)
@@ -98,7 +81,6 @@ def start_mqtt_loop():
     return client
 
 
-# ---------- Tk UI ----------
 class KitchenUI(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -356,3 +338,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

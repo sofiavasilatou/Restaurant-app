@@ -835,12 +835,24 @@ class Database:
                 except Exception:
                     pass
 
-            # If payment_method provided ensure column exists then store it on receipt rows
+            # If payment_method provided store it on receipt rows
             if payment_method is not None:
-                
-                cur.execute("UPDATE RECEIPT SET payment_method = ? WHERE order_id = ?", (payment_method, order_id))
+                try:
+                    cur.execute("UPDATE RECEIPT SET payment_method = ? WHERE order_id = ?", (payment_method, order_id))
+                except Exception:
+                    pass
 
-            cur.execute("UPDATE RECEIPT SET paid_off = ? WHERE order_id = ?", (in_place_status, order_id))
+            # Mark order row as paid (if ORDERS.paid exists) and set in-place order status
+            try:
+                cur.execute("UPDATE ORDERS SET paid = 1 WHERE order_id = ?", (order_id,))
+            except Exception:
+                pass
+
+            # Update IN_PLACE_ORDER.status if the table exists / value provided
+            try:
+                cur.execute("UPDATE IN_PLACE_ORDER SET status = ? WHERE order_id = ?", (in_place_status, order_id))
+            except Exception:
+                pass
             
 
             conn.commit()
@@ -1803,6 +1815,7 @@ class ReservationWindow(tk.Toplevel):
                     if not already_placed_elsewhere:
                         row = candidate
 
+            
             # If no real table is mapped to this slot, skip drawing placeholders
             if not row:
                 continue
@@ -3674,4 +3687,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

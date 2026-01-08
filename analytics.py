@@ -63,9 +63,6 @@ plt.show()
 
 
 #συνολικα φιλοδωρηματα ανα μερα
-# -----------------------------
-# ΦΙΛΟΔΩΡΗΜΑΤΑ ΑΝΑ ΗΜΕΡΑ (2025)
-# -----------------------------
 
 df_tips = pd.read_sql("""
 SELECT date, tips
@@ -179,21 +176,21 @@ df_orders["datetime"] = pd.to_datetime(
 )
 
 
-# -----------------------------
+
 # 4. ΦΙΛΤΡΑΡΙΣΜΑ: μόνο έτος 2025
-# -----------------------------
+
 df_orders_2025 = df_orders[
     df_orders["datetime"].dt.year == 2025
 ]
 
-# -----------------------------
+
 # 5. Υπολογισμός ημέρας εβδομάδας
-# -----------------------------
+
 df_orders_2025["weekday"] = df_orders_2025["datetime"].dt.day_name()
 
-# -----------------------------
+
 # 6. Αριθμός παραγγελιών ανά ημέρα
-# -----------------------------
+
 orders_per_weekday = (
     df_orders_2025
     .groupby("weekday")
@@ -201,9 +198,9 @@ orders_per_weekday = (
     .reset_index(name="orders")
 )
 
-# -----------------------------
+
 # 7. ΣΩΣΤΗ ΣΕΙΡΑ ΗΜΕΡΩΝ
-# -----------------------------
+
 weekday_order = [
     "Monday", "Tuesday", "Wednesday",
     "Thursday", "Friday", "Saturday", "Sunday"
@@ -217,9 +214,7 @@ orders_per_weekday["weekday"] = pd.Categorical(
 
 orders_per_weekday = orders_per_weekday.sort_values("weekday")
 
-# -----------------------------
-# 8. Μετάφραση ημερών στα Ελληνικά
-# -----------------------------
+
 weekday_gr = {
     "Monday": "ΔΕΥΤΕΡΑ",
     "Tuesday": "ΤΡΙΤΗ",
@@ -236,9 +231,7 @@ orders_per_weekday["weekday_gr"] = (
     .map(weekday_gr)
 )
 
-# -----------------------------
-# 9. ΓΡΑΦΗΜΑ
-# -----------------------------
+
 plt.figure(figsize=(9, 5))
 
 plt.bar(
@@ -253,8 +246,5 @@ plt.title("Αριθμός Παραγγελιών ανά Ημέρα Εβδομά�
 plt.tight_layout()
 plt.show()
 
-# -----------------------------
-# 10. Εκτύπωση πίνακα (προαιρετικό)
-# -----------------------------
 
 print(orders_per_weekday[["weekday_gr", "orders"]])
